@@ -21,6 +21,9 @@ RUN apt-get update && \
 RUN /usr/sbin/php5enmod mcrypt
 RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf && \
     sed -i "s/variables_order.*/variables_order = \"EGPCS\"/g" /etc/php5/apache2/php.ini
+    
+# Enable Kerb fwd
+RUN echo "<Location /> SetEnvIf X­Forwarded­User (.*) REMOTE_USER=$1 </Location>" >> /etc/apache2/apache2.conf
 
 #Enable .htaccess files
 ENV ALLOW_OVERRIDE true
